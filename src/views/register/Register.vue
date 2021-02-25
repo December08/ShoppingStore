@@ -42,7 +42,7 @@ const useRegisterEffect = (showToast) => {
   const data = reactive({ username: '', password: '', ensurement: '' })
   const handleRegister = async () => {
     try {
-      const result = await post('111/api/user/register', {
+      const result = await post('/api/user/register', {
         username: data.username,
         password: data.password
       })
