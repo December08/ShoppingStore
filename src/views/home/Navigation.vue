@@ -5,8 +5,10 @@
       :class="{'navigation__item': true, 'navigation__item--active': index === 0}"
       :key="item.icon"
     >
-      <div class="iconfont" v-html="item.icon"></div>
-      <div class="navigation__title">{{item.text}}</div>
+      <router-link :to="item.to">
+        <div class="iconfont" v-html="item.icon"></div>
+        <div class="navigation__title">{{item.text}}</div>
+      </router-link>
     </div>
   </div>
 </template>
@@ -16,10 +18,10 @@ export default {
   name: 'Navigation',
   setup () {
     const dockerList = [
-      { icon: '&#xec0b;', text: '首页' },
-      { icon: '&#xe60e;', text: '购物车' },
-      { icon: '&#xe60f;', text: '订单' },
-      { icon: '&#xe67b;', text: '我的' }
+      { icon: '&#xec0b;', text: '首页', to: { name: 'Home' } },
+      { icon: '&#xe60e;', text: '购物车', to: { name: 'CartList' } },
+      { icon: '&#xe60f;', text: '订单', to: { name: 'Home' } },
+      { icon: '&#xe67b;', text: '我的', to: { name: 'Home' } }
     ]
     return { dockerList }
   }
@@ -44,8 +46,14 @@ export default {
       margin: 0.07rem 0 0.02rem 0;
       font-size: 0.18rem;
     }
+    a {
+      color: $content-fontcolor;
+      text-decoration: none;
+    }
     &--active {
-      color: #1fa4fc;
+      a {
+        color: #1fa4fc;
+      }
     }
   }
   &__title {
