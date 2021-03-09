@@ -30,7 +30,7 @@
         v-for="item in productList"
         :key="item._id"
       >
-        <div class="product__item" v-if="item.count">
+        <div class="product__item" >
           <div
             class="product__item__checked iconfont"
             :style="{ color: (item.check) ? '#0091FF' : '#999' }"
@@ -82,48 +82,14 @@
 <script>
 import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
-import { useCommonCartEffect } from './commonCartEffect'
+import { useCommonCartEffect } from '../../effects/cartEffects'
 
 const useCartEffect = (shopId) => {
   const {
-    changeItemToCart, changeItemChecked,
-    clearAllProduct, cartList, setCartItemsChecked
-  } = useCommonCartEffect()
+    changeItemToCart, changeItemChecked, productList,
+    clearAllProduct, cartList, setCartItemsChecked, total, price
+  } = useCommonCartEffect(shopId)
 
-  // 计算总量
-  const total = computed(() => {
-    const productList = cartList[shopId]?.productList
-    let count = 0
-    if (productList) {
-      for (const i in productList) {
-        const product = productList[i]
-        count += product.count
-      }
-    }
-    if (count > 99) {
-      count = '99+'
-    }
-    return count
-  })
-  // 计算总价
-  const price = computed(() => {
-    const productList = cartList[shopId]?.productList
-    let price = 0
-    if (productList) {
-      for (const i in productList) {
-        const product = productList[i]
-        if (product.check) {
-          price += product.count * product.price
-        }
-      }
-    }
-    return price.toFixed(2)
-  })
-  // 获取购物车列表信息
-  const productList = computed(() => {
-    const productList = cartList[shopId]?.productList || []
-    return productList
-  })
   // 查看是否全选
   const allChecked = computed(() => {
     const productList = cartList[shopId]?.productList

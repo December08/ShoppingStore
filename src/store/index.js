@@ -11,7 +11,7 @@ const getLocalCartList = () => {
   /**
    * shopId { -- 商铺Id
    *   shopName: -- 商铺名字
-   *   shopList { -- 商铺商品列表
+   *   productList { -- 商铺商品列表
    *     productId {
    *       -- 商品信息
    *     }
@@ -60,6 +60,10 @@ export default createStore({
         products[key].check = true
       }
       setLocalCartList(state)
+    },
+    // 清空购物车
+    clearCartData (state, shopId) {
+      state.cartList[shopId].productList = {}
     }
   },
   actions: {

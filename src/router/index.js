@@ -1,4 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
+import store from '../store/index'
+
 const routes = [
   {
     path: '/',
@@ -32,7 +34,26 @@ const routes = [
   }, {
     path: '/orderConfirmation/:id',
     name: 'OrderConfirmation',
-    component: () => import(/* webpackChunkName: "shop" */ '../views/orderConfirmation/OrderConfirmation.vue')
+    component: () => import(/* webpackChunkName: "shop" */ '../views/orderConfirmation/OrderConfirmation.vue'),
+    beforeEnter (to, from, next) {
+      const shopId = from.params.id
+      const productList = store.state.cartList[shopId].productList
+      let total = 0
+      for (const i in productList) {
+        if (productList[i].count) {
+          total++
+        }
+      }
+      if (total) {
+        next()
+      } else {
+        next(false)
+      }
+    }
+  }, {
+    path: '/orderlist',
+    name: 'OrderList',
+    component: () => import(/* webpackChunkName: "orderListH" */ '../views/orderList/OrderList.vue')
   }
 ]
 

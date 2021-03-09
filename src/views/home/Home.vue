@@ -3,11 +3,11 @@
     <static-part/>
     <nearby/>
   </div>
-  <navigation/>
+  <navigation :currentIndex="0"/>
 </template>
 
 <script>
-import Navigation from './Navigation.vue'
+import Navigation from '../../components/Navigation'
 import Nearby from './Nearby.vue'
 import StaticPart from './StaticPart.vue'
 export default {
